@@ -1,5 +1,12 @@
-import React from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const ProductItem = ({
@@ -10,8 +17,15 @@ const ProductItem = ({
   onPressFavorite,
   onPressAddToCart,
 }) => {
+  const [width, setWidth] = useState(null);
+
+  useEffect(() => {
+    const { width: deviceWidth } = Dimensions.get("window");
+    setWidth(deviceWidth / 2 - 15);
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, width }}>
       <View style={styles.imageContainer}>
         <Image source={image} style={styles.image} />
         <TouchableOpacity
@@ -46,7 +60,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     shadowColor: "#000",
-    width: 200,
     height: 280,
     shadowOffset: {
       width: 0,

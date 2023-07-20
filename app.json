@@ -22,15 +22,22 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.shresthanabin.vtcoffee"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "9af479a5-b062-496c-b3df-7751b3e08299"
+        "projectId": "03e0362d-3148-42ac-a5f1-cf71bc457b9c"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/03e0362d-3148-42ac-a5f1-cf71bc457b9c"
     }
   }
 }

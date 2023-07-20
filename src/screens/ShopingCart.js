@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Octicons from "react-native-vector-icons/Octicons";
+import { SafeAreaView } from "react-native-web";
 
 const ShoppingCartScreen = () => {
   const {
@@ -94,15 +95,13 @@ const ShoppingCartScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <ScrollView>
-        <FlatList
-          data={cart}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.cartList}
-        />
-      </ScrollView>
+      <FlatList
+        data={cart}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.cartList}
+      />
 
       <View style={styles.footer}>
         <TouchableOpacity

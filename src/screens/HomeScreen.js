@@ -1,28 +1,32 @@
+import React, { useContext } from "react";
 import {
   View,
-  ScrollView,
   Text,
   StyleSheet,
   Dimensions,
   FlatList,
+  SafeAreaView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext } from "react";
 import Carousel from "react-native-snap-carousel";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { CarouselItem, ProductItem, Brand, CoffeeShopCard } from "../component";
-import { carouselData, brandData } from "../data/fake";
+import { carouselData, brandData, coffeeShops } from "../data/fake";
+import { ProductContext } from "../../ProductContext";
 
-import { ProductContext, CoffeeShopContext } from "../../App";
+if (__DEV__) {
+  console.log = () => {};
+  console.warn = () => {};
+  console.error = () => {};
+}
 
 const screenWidth = Dimensions.get("window").width;
 const itemWidth = screenWidth;
 
 const HomeScreen = () => {
   const { products, setProducts } = useContext(ProductContext);
-  const { restaurants } = useContext(CoffeeShopContext);
   const navigation = useNavigation();
 
   const renderProductItem = ({ item }) => (
@@ -54,6 +58,92 @@ const HomeScreen = () => {
     return <View style={styles.separator} />;
   };
 
+  const renderItem = ({ item }) => {
+    switch (item.type) {
+      case "header":
+        return (
+          <View style={styles.headText}>
+            <View style={styles.topText}>
+              <View style={styles.mainTitle}>
+                <Text style={styles.greetingText}>Hello,</Text>
+                <Text style={styles.nameText}>Parkling</Text>
+                <Text style={styles.greetingText}>!</Text>
+              </View>
+              <View style={styles.iconText}>
+                <Ionicons
+                  name="md-location-outline"
+                  color="#FF9314"
+                  size={20}
+                />
+                <Text style={styles.iconTextDetail}>Yuen Long, Hong kong</Text>
+              </View>
+            </View>
+            <View style={styles.icons}>
+              <View style={styles.icon}>
+                <MaterialCommunityIcons
+                  color="#fff"
+                  name="ticket-confirmation-outline"
+                  size={30}
+                />
+              </View>
+              <View style={styles.icon}>
+                <Ionicons color="#fff" name="heart-outline" size={30} />
+              </View>
+            </View>
+          </View>
+        );
+      case "carousel":
+        return (
+          <SafeAreaView style={styles.carousel}>
+            <Carousel
+              data={carouselData}
+              renderItem={({ item }) => <CarouselItem item={item} />}
+              sliderWidth={screenWidth}
+              itemWidth={itemWidth}
+            />
+          </SafeAreaView>
+        );
+      case "recommended":
+        return (
+          <SafeAreaView>
+            <FlatList
+              style={styles.container1}
+              horizontal
+              data={products}
+              renderItem={renderProductItem}
+              keyExtractor={(item) => item.id.toString()}
+              ItemSeparatorComponent={renderSeparator}
+            />
+          </SafeAreaView>
+        );
+      case "brand":
+        return (
+          <SafeAreaView>
+            <FlatList
+              data={brandData}
+              renderItem={renderBrandCard}
+              keyExtractor={(item) => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            />
+          </SafeAreaView>
+        );
+      case "coffeeShop":
+        return (
+          <SafeAreaView>
+            <FlatList
+              data={coffeeShops}
+              renderItem={renderCoffeeShopItem}
+              keyExtractor={(item) => item.id}
+              showsHorizontalScrollIndicator={false}
+            />
+          </SafeAreaView>
+        );
+      default:
+        return null;
+    }
+  };
+
   const renderCoffeeShopItem = ({ item }) => {
     const { name, image, distance, location, ratings, noOfRatings } = item;
     return (
@@ -68,78 +158,22 @@ const HomeScreen = () => {
       />
     );
   };
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.headText}>
-        <View style={styles.topText}>
-          <View style={styles.mainTitle}>
-            <Text style={styles.greetingText}>Hello,</Text>
-            <Text style={styles.nameText}>Parkling</Text>
-            <Text style={styles.greetingText}>!</Text>
-          </View>
-          <View style={styles.iconText}>
-            <Ionicons name="md-location-outline" color="#FF9314" size={20} />
-            <Text style={styles.iconTextDetail}>Yuen Long, Hong kong</Text>
-          </View>
-        </View>
-        <View style={styles.icons}>
-          <View style={styles.icon}>
-            <MaterialCommunityIcons
-              color="#fff"
-              name="ticket-confirmation-outline"
-              size={30}
-            />
-          </View>
-          <View style={styles.icon}>
-            <Ionicons color="#fff" name="heart-outline" size={30} />
-          </View>
-        </View>
-      </View>
-      <View style={styles.carousel}>
-        <Carousel
-          data={carouselData}
-          renderItem={({ item }) => <CarouselItem item={item} />}
-          sliderWidth={screenWidth}
-          itemWidth={itemWidth}
-        />
-      </View>
-      <View>
-        <Text style={styles.titleText}>RECOMMENDED FOR YOU</Text>
-        <FlatList
-          style={styles.container1}
-          horizontal
-          data={products}
-          renderItem={renderProductItem}
-          keyExtractor={(item) => item.id.toString()}
-          ItemSeparatorComponent={renderSeparator}
-        />
-      </View>
-      <View>
-        <Text style={styles.titleText}>POPULAR BRAND</Text>
-        <FlatList
-          data={brandData}
-          renderItem={renderBrandCard}
-          keyExtractor={(item) => item.id}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
-
-      <View>
-        <Text style={styles.titleText1}>COFFEE SHOP</Text>
-
-        <FlatList
-          data={restaurants}
-          renderItem={renderCoffeeShopItem}
-          keyExtractor={(item) => item.id}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
-    </ScrollView>
+    <FlatList
+      style={styles.container}
+      data={[
+        { type: "header" },
+        { type: "carousel" },
+        { type: "recommended" },
+        { type: "brand" },
+        { type: "coffeeShop" },
+      ]}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => index.toString()}
+    />
   );
 };
-
-export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -204,7 +238,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     width: "100%",
-    justifyContent: "center",
   },
   separator: {
     width: 10,
@@ -227,3 +260,5 @@ const styles = StyleSheet.create({
     color: "#000",
   },
 });
+
+export default HomeScreen;

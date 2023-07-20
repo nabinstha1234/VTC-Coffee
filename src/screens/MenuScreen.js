@@ -6,14 +6,14 @@ import {
   ImageBackground,
   TouchableOpacity,
   StyleSheet,
-  ScrollView,
+  SafeAreaView,
   FlatList,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
 import { ProductItem } from "../component";
-import { ProductContext } from "../../App";
+import { ProductContext } from "../../ProductContext";
 
 const MenuScreen = (props) => {
   const [activeTab, setActiveTab] = useState(null);
@@ -129,7 +129,7 @@ const MenuScreen = (props) => {
           </View>
         </ImageBackground>
       )}
-      <ScrollView>
+      <SafeAreaView>
         <FlatList
           data={tabData}
           renderItem={renderTabButton}
@@ -167,7 +167,7 @@ const MenuScreen = (props) => {
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
         />
-      </ScrollView>
+      </SafeAreaView>
     </View>
   );
 };
