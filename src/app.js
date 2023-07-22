@@ -1,4 +1,5 @@
 import "react-native-gesture-handler";
+import { StatusBar, SafeAreaView } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -105,9 +106,16 @@ export function AppTabsNavigation() {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <AppTabsNavigation />
-    </NavigationContainer>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar
+        barStyle="dark-content"
+        translucent
+        backgroundColor="transparent"
+      />
+      <NavigationContainer>
+        <AppTabsNavigation />
+      </NavigationContainer>
+    </SafeAreaView>
   );
 };
 

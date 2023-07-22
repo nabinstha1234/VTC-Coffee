@@ -19,16 +19,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
     elevation: 5,
     marginTop: 10,
     marginBottom: 10,
+    shadowColor: "#0000001A",
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.75,
+    shadowRadius: 30,
   },
   logo: {
     width: 80,

@@ -129,7 +129,13 @@ const MenuScreen = (props) => {
           </View>
         </ImageBackground>
       )}
-      <SafeAreaView>
+      <View
+        style={{
+          flex: 1,
+          marginBottom: 20,
+          paddingBottom: 20,
+        }}
+      >
         <FlatList
           data={tabData}
           renderItem={renderTabButton}
@@ -167,7 +173,7 @@ const MenuScreen = (props) => {
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
         />
-      </SafeAreaView>
+      </View>
     </View>
   );
 };
@@ -190,6 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#888",
   },
   backgroundImage: {
+    flex: 1,
     width: "100%",
     height: 350,
     resizeMode: "cover",

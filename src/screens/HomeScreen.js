@@ -94,18 +94,19 @@ const HomeScreen = () => {
         );
       case "carousel":
         return (
-          <SafeAreaView style={styles.carousel}>
+          <View style={styles.carousel}>
             <Carousel
               data={carouselData}
               renderItem={({ item }) => <CarouselItem item={item} />}
               sliderWidth={screenWidth}
               itemWidth={itemWidth}
             />
-          </SafeAreaView>
+          </View>
         );
       case "recommended":
         return (
-          <SafeAreaView>
+          <View>
+            <Text style={styles.titleText}>RECOMMENDED FOR YOU</Text>
             <FlatList
               style={styles.container1}
               horizontal
@@ -114,11 +115,12 @@ const HomeScreen = () => {
               keyExtractor={(item) => item.id.toString()}
               ItemSeparatorComponent={renderSeparator}
             />
-          </SafeAreaView>
+          </View>
         );
       case "brand":
         return (
-          <SafeAreaView>
+          <View>
+            <Text style={styles.titleText}>popular brand</Text>
             <FlatList
               data={brandData}
               renderItem={renderBrandCard}
@@ -126,18 +128,19 @@ const HomeScreen = () => {
               horizontal
               showsHorizontalScrollIndicator={false}
             />
-          </SafeAreaView>
+          </View>
         );
       case "coffeeShop":
         return (
-          <SafeAreaView>
+          <View>
+            <Text style={styles.titleText}>coffee shop</Text>
             <FlatList
               data={coffeeShops}
               renderItem={renderCoffeeShopItem}
               keyExtractor={(item) => item.id}
               showsHorizontalScrollIndicator={false}
             />
-          </SafeAreaView>
+          </View>
         );
       default:
         return null;
@@ -234,6 +237,7 @@ const styles = StyleSheet.create({
     color: "#FF9314",
   },
   carousel: {
+    flex: 1,
     marginTop: 20,
     display: "flex",
     flexDirection: "row",
@@ -252,6 +256,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: "BebaseNuove",
     color: "#000",
+    textTransform: "uppercase",
   },
   titleText1: {
     marginBottom: 10,
